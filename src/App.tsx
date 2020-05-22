@@ -4,12 +4,7 @@ import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
 
-import { getAlbumFiles } from "./creds/aws";
-
-interface IAlbum {
-  album: string; // album name
-  photos: string[]; // urls
-}
+import { getSlideshowFiles, IAlbum } from "./creds/aws";
 
 function App() {
   const [album, setAlbum] = useState<IAlbum | undefined>(undefined);
@@ -17,7 +12,7 @@ function App() {
 
   useEffect(() => {
     const fn = async () => {
-      const data = await getAlbumFiles();
+      const data = await getSlideshowFiles();
       if (data) setAlbum(data);
 
       if (!run) return;

@@ -14,26 +14,25 @@ const s3 = new AWS.S3({
   params: { Bucket },
 });
 
+export interface IAlbum {
+  photos: string[]; // urls
+}
+
 // Show the photos that exist in an album.
-export const getAlbumFiles = async () => {
-  const album = "uploads";
-  const albumPhotosKey = encodeURIComponent(album) + "/";
-
+export const getSlideshowFiles = async (): Promise<IAlbum | void> => {
+  const imgPath = "uploads/";
   try {
-    const data = await s3
-      .listObjects({ Prefix: albumPhotosKey, Bucket })
-      .promise();
-
+    const data = await s3.listObjectsV2({ Prefix: imgPath, Bucket }).promise();
     const href = "https://nana-media.s3.amazonaws.com/";
 
-    const photos = (data.Contents || [])
-      .map((photo) => {
-        const photoKey = photo.Key;
-        return photoKey ? href + photoKey : "";
-      })
-      .filter((x) => x !== "" && x !== `${href}${album}/`);
+    if (!data.Contents) throw new Error("No data.Contents!");
 
-    return { album, photos };
+    const photos = data.Contents.map((photo) => {
+      const photoKey = photo.Key as string;
+      return href + photoKey;
+    }).filter((x) => x !== "" && x !== href + imgPath);
+
+    return { photos };
   } catch (err) {
     return alert("There was an error viewing your album: " + err.message);
   }
