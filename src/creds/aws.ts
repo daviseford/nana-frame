@@ -59,10 +59,11 @@ export const getAll = async () => {
   try {
     const list = await listAlbums();
 
-    if (!list) throw Error("asdasd");
+    if (!list) throw Error("Failed to get list");
 
-    const fns = list.albums.map((x) => getAlbumFiles(x));
-    const photos = (await Promise.allSettled(fns))
+    const promiseFns = list.albums.map((x) => getAlbumFiles(x));
+
+    const photos = (await Promise.allSettled(promiseFns))
       .filter((x) => x.status === "fulfilled")
       // @ts-ignore
       .map((x) => x.value);

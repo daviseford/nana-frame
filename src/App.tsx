@@ -3,27 +3,31 @@ import logo from "./logo.svg";
 import "./App.css";
 import { listAlbums, getAll } from "./creds/aws";
 
+interface IAlbum {
+  album: string; // album name
+  photos: string[]; // urls
+}
+
 function App() {
-  const [albums, setAlbums] = useState([] as string[]);
+  const [albums, setAlbums] = useState([] as IAlbum[]);
   const [run, setRun] = useState(true);
 
-  useEffect(() => {
-    getAll()
-  })
-
   // useEffect(() => {
-  //   const fn = async () => {
-  //     const albs = await listAlbums();
-  //     if (albs) setAlbums(albs.albums);
+  //   getAll();
+  // });
 
-  //     // TODO: Add timer to refresh
-  //     if (!run) {
-  //       setTimeout(() => setRun(true), 10000);
-  //       setRun(false);
-  //     }
-  //   };
-  //   if (run) fn();
-  // }, [run]);
+  useEffect(() => {
+    const fn = async () => {
+      const data = await getAll();
+      if (data) setAlbums(data);
+
+      // TODO: Add timer to refresh
+      if (run) return 
+      setTimeout(() => setRun(true), 10000);
+      setRun(false);
+    };
+    if (run) fn();
+  }, [run]);
 
   console.log(albums);
 
