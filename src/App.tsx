@@ -3,6 +3,17 @@ import React, { useEffect, useState } from "react";
 import { getSlideshowFiles, IAlbum } from "./creds/aws";
 import Album from "./Album";
 
+const Error = () => {
+  return (
+    <div className={"def-error"}>
+      No pictures found.
+      <br />
+      <br />
+      We love you Nana!
+    </div>
+  );
+};
+
 function App() {
   const [album, setAlbum] = useState<IAlbum | undefined>(undefined);
   const [run, setRun] = useState(true);
@@ -24,6 +35,8 @@ function App() {
   return (
     <>
       <Album album={album} />
+
+      {(!album || !album.photos.length) && <Error />}
 
       {/* <img src={logo} className="App-logo" alt="logo" />
         <p>
