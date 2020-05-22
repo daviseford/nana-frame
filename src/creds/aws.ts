@@ -15,10 +15,9 @@ const s3 = new AWS.S3({
 });
 
 // List the photo albums that exist in the bucket.
-export const listAlbums = () => {
-  return s3.listObjects({ Delimiter: "/", Bucket }, (err, data) => {
-    if (err)
-      return alert("There was an error listing your albums: " + err.message);
+export const listAlbums = async () => {
+  try {
+    const data = await s3.listObjects({ Delimiter: "/", Bucket }).promise();
 
     const { CommonPrefixes = {} } = data;
 
@@ -29,5 +28,7 @@ export const listAlbums = () => {
     });
 
     return { data, albums };
-  });
+  } catch (err) {
+    return alert("There was an error listing your albums: " + err.message);
+  }
 };

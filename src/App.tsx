@@ -1,13 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { listAlbums } from "./creds/aws";
 
 function App() {
+  const [albums, setAlbums] = useState([] as string[]);
+  const [run, setRun] = useState(true);
+
   useEffect(() => {
-    const something = listAlbums();
-    console.log(something);
-  });
+    const fn = async () => {
+      const albs = await listAlbums();
+      if (albs) setAlbums(albs.albums);
+
+      // TODO: Add timer to refresh
+      if (!run) {
+        setTimeout(() => setRun(true), 10000);
+        setRun(false);
+      }
+    };
+    if (run) fn();
+  }, [run]);
+
+  console.log(albums);
 
   return (
     <div className="App">
