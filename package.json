@@ -12,6 +12,7 @@
     "@types/react-dom": "^16.9.0",
     "aws-sdk": "^2.682.0",
     "react": "^16.13.1",
+    "react-awesome-slider": "^4.1.0",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "typescript": "3.9.2"

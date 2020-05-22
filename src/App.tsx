@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { listAlbums, getAll } from "./creds/aws";
+
+import withAutoplay from "react-awesome-slider/dist/autoplay";
+import "react-awesome-slider/dist/styles.css";
+
+import { getAll } from "./creds/aws";
+import AwesomeSlider from "react-awesome-slider";
 
 interface IAlbum {
   album: string; // album name
@@ -12,17 +15,13 @@ function App() {
   const [albums, setAlbums] = useState([] as IAlbum[]);
   const [run, setRun] = useState(true);
 
-  // useEffect(() => {
-  //   getAll();
-  // });
-
   useEffect(() => {
     const fn = async () => {
       const data = await getAll();
       if (data) setAlbums(data);
 
       // TODO: Add timer to refresh
-      if (run) return 
+      if (run) return;
       setTimeout(() => setRun(true), 10000);
       setRun(false);
     };
@@ -32,9 +31,10 @@ function App() {
   console.log(albums);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div>
+      {albums.length && <Album {...albums[0]} />}
+
+      {/* <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -45,10 +45,25 @@ function App() {
           rel="noopener noreferrer"
         >
           Learn React
-        </a>
-      </header>
+        </a> */}
     </div>
   );
 }
+
+const AutoplaySlider = withAutoplay(AwesomeSlider);
+
+const Album: React.FC<IAlbum> = ({ album, photos }) => {
+  return (
+    <AutoplaySlider
+      play={true}
+      cancelOnInteraction={false} // should stop playing on user interaction
+      interval={3000}
+    >
+      {photos.map((p) => (
+        <div data-src={p} key={p} />
+      ))}
+    </AutoplaySlider>
+  );
+};
 
 export default App;
