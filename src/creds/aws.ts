@@ -32,3 +32,45 @@ export const listAlbums = async () => {
     return alert("There was an error listing your albums: " + err.message);
   }
 };
+
+// Show the photos that exist in an album.
+export const getAlbumFiles = async (album: string) => {
+  const albumPhotosKey = encodeURIComponent(album) + "/";
+
+  try {
+    const data = await s3
+      .listObjects({ Prefix: albumPhotosKey, Bucket })
+      .promise();
+
+    const href = "https://nana-media.s3.amazonaws.com/";
+
+    const photos = data.Contents?.map(function (photo) {
+      const photoKey = photo.Key;
+      return photoKey ? href + photoKey : undefined;
+    }).filter((x) => !!x && x !== `${href}${album}/`);
+
+    return { album, photos };
+  } catch (err) {
+    return alert("There was an error viewing your album: " + err.message);
+  }
+};
+
+export const getAll = async () => {
+  try {
+    const list = await listAlbums();
+
+    if (!list) throw Error("asdasd");
+
+    const fns = list.albums.map((x) => getAlbumFiles(x));
+    const photos = (await Promise.allSettled(fns))
+      .filter((x) => x.status === "fulfilled")
+      // @ts-ignore
+      .map((x) => x.value);
+
+    console.log(photos);
+
+    return photos;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
