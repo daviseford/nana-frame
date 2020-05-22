@@ -1,3 +1,4 @@
+import 'core-js/stable' // polyfills
 import React, { useEffect, useState } from "react";
 
 import { getSlideshowFiles, IAlbum } from "./creds/aws";
