@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
+import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
 
-import { getAll } from "./creds/aws";
-import AwesomeSlider from "react-awesome-slider";
+import { getAlbumFiles } from "./creds/aws";
 
 interface IAlbum {
   album: string; // album name
@@ -12,15 +12,14 @@ interface IAlbum {
 }
 
 function App() {
-  const [albums, setAlbums] = useState([] as IAlbum[]);
+  const [album, setAlbums] = useState<IAlbum | null>(null);
   const [run, setRun] = useState(true);
 
   useEffect(() => {
     const fn = async () => {
-      const data = await getAll();
+      const data = await getAlbumFiles();
       if (data) setAlbums(data);
 
-      // TODO: Add timer to refresh
       if (run) return;
       setTimeout(() => setRun(true), 10000);
       setRun(false);
@@ -28,11 +27,11 @@ function App() {
     if (run) fn();
   }, [run]);
 
-  console.log(albums);
+  console.log(album);
 
   return (
-    <div>
-      {albums.length && <Album {...albums[0]} />}
+    <>
+      {album && <Album {...album} />}
 
       {/* <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -46,7 +45,7 @@ function App() {
         >
           Learn React
         </a> */}
-    </div>
+    </>
   );
 }
 
