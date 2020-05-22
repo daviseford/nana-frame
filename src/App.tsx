@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { listAlbums } from './creds/aws';
 
 function App() {
+
+
+  useEffect(() => {
+    listAlbums()
+  })
+
   return (
     <div className="App">
       <header className="App-header">
