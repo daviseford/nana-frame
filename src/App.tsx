@@ -12,15 +12,15 @@ interface IAlbum {
 }
 
 function App() {
-  const [album, setAlbums] = useState<IAlbum | null>(null);
+  const [album, setAlbum] = useState<IAlbum | undefined>(undefined);
   const [run, setRun] = useState(true);
 
   useEffect(() => {
     const fn = async () => {
       const data = await getAlbumFiles();
-      if (data) setAlbums(data);
+      if (data) setAlbum(data);
 
-      if (run) return;
+      if (!run) return;
       setTimeout(() => setRun(true), 10000);
       setRun(false);
     };
@@ -31,7 +31,7 @@ function App() {
 
   return (
     <>
-      {album && <Album {...album} />}
+      <Album album={album} />
 
       {/* <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -51,14 +51,16 @@ function App() {
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
-const Album: React.FC<IAlbum> = ({ album, photos }) => {
+const Album = (props: { album?: IAlbum }) => {
+  if (!props.album) return <>No pictures found.</>;
+
   return (
     <AutoplaySlider
       play={true}
       cancelOnInteraction={false} // should stop playing on user interaction
       interval={3000}
     >
-      {photos.map((p) => (
+      {props.album.photos.map((p) => (
         <div data-src={p} key={p} />
       ))}
     </AutoplaySlider>
