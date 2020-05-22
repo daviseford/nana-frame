@@ -6,33 +6,28 @@ AWS.config.credentials = new AWS.CognitoIdentityCredentials({
   IdentityPoolId: "us-east-1:3a445c96-1f34-4459-b18c-91f99b16cbf4",
 });
 
-const albumBucketName = "nana-media";
+const Bucket = "nana-media";
 
 // Create a new service object
 const s3 = new AWS.S3({
   apiVersion: "2006-03-01",
-  params: { Bucket: albumBucketName },
+  params: { Bucket },
 });
 
 // List the photo albums that exist in the bucket.
 export const listAlbums = () => {
-  return s3.listObjects(
-    { Delimiter: "/", Bucket: albumBucketName },
-    (err, data) => {
-      if (err)
-        return alert("There was an error listing your albums: " + err.message);
+  return s3.listObjects({ Delimiter: "/", Bucket }, (err, data) => {
+    if (err)
+      return alert("There was an error listing your albums: " + err.message);
 
-      console.log(data);
-      const { CommonPrefixes = {} } = data;
+    const { CommonPrefixes = {} } = data;
 
-      const albums = Object.keys(CommonPrefixes).map((key) => {
-        const prefix = CommonPrefixes[key].Prefix || "";
-        const albumName = decodeURIComponent(prefix.replace("/", ""));
-        return albumName;
-      });
-      
-      console.log(albums);
-      debugger;
-    }
-  );
+    const albums = Object.keys(CommonPrefixes).map((key) => {
+      const prefix = CommonPrefixes[key].Prefix || "";
+      const albumName = decodeURIComponent(prefix.replace("/", ""));
+      return albumName;
+    });
+
+    return { data, albums };
+  });
 };

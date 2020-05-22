@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { listAlbums } from './creds/aws';
+import React, { useEffect } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { listAlbums } from "./creds/aws";
 
 function App() {
-
-
   useEffect(() => {
-    listAlbums()
-  })
+    const something = listAlbums();
+    console.log(something);
+  });
 
   return (
     <div className="App">
