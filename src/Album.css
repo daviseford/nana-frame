@@ -16,15 +16,18 @@
   --organic-arrow-thickness: 4px;
   --organic-arrow-height: 40px;
   --slider-height-percentage: 60%;
-  --loader-bar-color: #851515;
-  --loader-bar-height: 6px;
+  /* --loader-bar-color: #851515;
+--loader-bar-height: 6px; */
+  --loader-bar-color: #5775DE;
+  --loader-bar-height: 9px;
   --control-button-width: 10%;
   --control-button-height: 25%;
   --control-button-opacity: 0.5;
   --control-button-hover-opacity: 0.75;
   --control-button-background: transparent;
   --transition-bezier: cubic-bezier(0.5, 0.075, 0.25, 0.95);
-  --slider-transition-duration: 575ms;
+  /* --slider-transition-duration: 575ms; */
+  --slider-transition-duration: 1000ms;
   --organic-arrow-color: #6a6a6a;
   --organic-arrow-border-radius: 0;
   --control-bullet-color: #6a6a6a;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
@@ -10,7 +10,19 @@ import listOfBgColors from "./style/bgColors";
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
+interface IWithColor {
+  [url: string]: string;
+}
+
 const Album: React.FC<{ album?: IAlbum }> = ({ album }) => {
+  const data: IWithColor = useMemo(() => {
+    if (!album?.photos.length) return {};
+    return album.photos.reduce((a, url) => {
+      a[url] = sample(listOfBgColors);
+      return a;
+    }, {});
+  }, [album]);
+
   if (!album?.photos.length) return <></>;
 
   return (
@@ -18,16 +30,12 @@ const Album: React.FC<{ album?: IAlbum }> = ({ album }) => {
       play={true}
       cancelOnInteraction={false}
       interval={3000}
-      animation="scaleOut"
       fillParent={true}
       buttons={false}
       // media={album.photos.map((source) => ({ source }))}
     >
-      {album.photos.map((url) => (
-        <div
-          data-src={url}
-          style={{ backgroundColor: sample(listOfBgColors) }}
-        />
+      {Object.keys(data).map((url) => (
+        <div data-src={url} style={{ backgroundColor: data[url] }} />
       ))}
     </AutoplaySlider>
   );
