@@ -1,5 +1,5 @@
 import "core-js/stable"; // polyfills
-import React, {  useState } from "react";
+import React, { useState } from "react";
 
 import { getSlideshowFiles, IAlbum } from "./creds/aws";
 import Album from "./Album";
@@ -32,11 +32,11 @@ function App() {
   console.log(album);
 
   return (
-    <>
+    <div className={"tall"}>
       <Album album={album} />
 
       {(!album || !album.photos.length) && <Error />}
-    </>
+    </div>
   );
 }
 

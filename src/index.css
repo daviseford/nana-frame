@@ -5,9 +5,32 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#root {
+  height: 100vh;
+}
+
+.tall {
+ height: 100vh;
+}
+
+.bgColor {
+  background-color: royalblue;
+}
+
+.def-error {
+  display: flex;
+  height: 70vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: larger;
+  font-weight: bolder;
 }

@@ -1,14 +1,4 @@
 
-.def-error {
-  display: flex;
-  height: 70vh;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: larger;
-  font-weight: bolder;
-}
-
 .awssld__container figure, .awssld__content, .awssld__box {
   display: block;
   position: absolute;
