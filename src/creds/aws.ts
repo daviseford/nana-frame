@@ -25,7 +25,7 @@ export const getSlideshowFiles = async (): Promise<IAlbum | void> => {
     const data = await s3.listObjectsV2({ Prefix: imgPath, Bucket }).promise();
     const href = "https://nana-media.s3.amazonaws.com/";
 
-    if (!data.Contents) throw new Error("No data.Contents!");
+    if (!data.Contents) throw new Error();
 
     const photos = data.Contents.map((photo) => {
       const photoKey = photo.Key as string;
