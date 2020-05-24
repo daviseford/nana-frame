@@ -18,11 +18,12 @@ const Album = (props: { album?: IAlbum }) => {
       interval={3000}
       animation="scaleOut"
       fillParent={true}
-      className="container"
+      buttons={false}
+      className="something"
       //   media={props.album.photos.map((p) => ({ source: p }))}
     >
       {props.album.photos.map((p) => (
-        <div data-src={p} key={p} />
+        <div data-src={p} key={p} className='hi' />
       ))}
     </AutoplaySlider>
   );
