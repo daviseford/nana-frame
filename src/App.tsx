@@ -2,8 +2,8 @@ import "core-js/stable"; // polyfills
 import React, { useState } from "react";
 
 import { getSlideshowFiles, IAlbum } from "./creds/aws";
-import Album from "./Album";
 import useInterval from "./hooks/useInterval";
+import Album from "./Album";
 
 const getMins = (desired_mins: number) => desired_mins * 1000 * 60;
 
