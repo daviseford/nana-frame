@@ -5,6 +5,8 @@ import withAutoplay from "react-awesome-slider/dist/autoplay";
 
 import "./Album.css";
 import { IAlbum } from "./creds/aws";
+import { sample } from "lodash";
+import listOfBgColors from "./style/bgColors";
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
@@ -19,9 +21,15 @@ const Album: React.FC<{ album?: IAlbum }> = ({ album }) => {
       animation="scaleOut"
       fillParent={true}
       buttons={false}
-      className="bgColor"
-      media={album.photos.map((source) => ({ source }))}
-    />
+      // media={album.photos.map((source) => ({ source }))}
+    >
+      {album.photos.map((url) => (
+        <div
+          data-src={url}
+          style={{ backgroundColor: sample(listOfBgColors) }}
+        />
+      ))}
+    </AutoplaySlider>
   );
 };
 

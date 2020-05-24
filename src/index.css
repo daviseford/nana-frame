@@ -21,15 +21,12 @@ code {
  height: 100vh;
 }
 
-.bgColor {
-  background-color: royalblue;
-}
-
 .def-error {
   display: flex;
   height: 70vh;
   justify-content: center;
   align-items: center;
+  align-self: center;
   text-align: center;
   font-size: larger;
   font-weight: bolder;
