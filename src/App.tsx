@@ -4,10 +4,12 @@ import React, { useEffect, useState } from "react";
 import { getSlideshowFiles, IAlbum } from "./creds/aws";
 import Album from "./Album";
 
+const getMins = (desired_mins: number) => desired_mins * 1000 * 60
+
 const Error = () => {
   return (
     <div className={"def-error"}>
-      No pictures found.
+      No pictures found yet.
       <br />
       <br />
       We love you Nana!
@@ -25,7 +27,7 @@ function App() {
       if (data) setAlbum(data);
 
       if (!run) return;
-      setTimeout(() => setRun(true), 10000);
+      setTimeout(() => setRun(true), getMins(1));
       setRun(false);
     };
     if (run) fn();
