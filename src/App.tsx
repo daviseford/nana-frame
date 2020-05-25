@@ -1,9 +1,10 @@
 import "core-js/stable"; // polyfills
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { getSlideshowFiles, IAlbum } from "./creds/aws";
 import useInterval from "./hooks/useInterval";
 import Album from "./Album";
+import './index.css'
 
 const getMins = (desired_mins: number) => desired_mins * 1000 * 60;
 
@@ -21,6 +22,16 @@ const Error = () => {
 function App() {
   const [album, setAlbum] = useState<IAlbum | undefined>(undefined);
 
+  // Fetch pictures on first load
+  useEffect(() => {
+    const fn = async () => {
+      const data = await getSlideshowFiles();
+      if (data) setAlbum(data);
+    };
+    fn();
+    // Only run once
+  }, []);
+
   useInterval(() => {
     const fn = async () => {
       const data = await getSlideshowFiles();
@@ -32,7 +43,7 @@ function App() {
   console.log(album);
 
   return (
-    <div className={''}>
+    <div className={""}>
       <Album album={album} />
 
       {(!album || !album.photos.length) && <Error />}
