@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Not working
+DISPLAY=:0
+
 xset s noblank
 xset s off
 xset -dpms
