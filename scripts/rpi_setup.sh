@@ -13,7 +13,7 @@ sudo apt-get update
 sudo apt-get upgrade
 
 # Deps
-sudo apt-get install xdotool unclutter sed chromium-browser --yes
+sudo apt-get install xscreensaver xdotool unclutter sed chromium-browser --yes
 
 # Now within the tool go to 3 Boot Options -> B1 Desktop / CLI -> B4 Desktop Autologin
 echo "Now within the tool go to 3 Boot Options -> B1 Desktop / CLI -> B4 Desktop Autologin"
