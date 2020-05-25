@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DISPLAY=:0
+export DISPLAY=:0
 
 xset s noblank
 xset s off
