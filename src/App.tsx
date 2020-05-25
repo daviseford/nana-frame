@@ -27,12 +27,12 @@ function App() {
       if (data) setAlbum(data);
     };
     fn();
-  }, 5000);
+  }, getMins(1));
 
   console.log(album);
 
   return (
-    <div className={"tall"}>
+    <div className={''}>
       <Album album={album} />
 
       {(!album || !album.photos.length) && <Error />}
