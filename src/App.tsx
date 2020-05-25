@@ -6,6 +6,7 @@ import useInterval from "./hooks/useInterval";
 import Album from "./Album";
 import './index.css'
 
+// const getSecs = (desired_secs: number) => desired_secs * 1000
 const getMins = (desired_mins: number) => desired_mins * 1000 * 60;
 
 const Error = () => {
@@ -38,7 +39,7 @@ function App() {
       if (data) setAlbum(data);
     };
     fn();
-  }, getMins(1));
+  }, getMins(0.1));
 
   console.log(album);
 

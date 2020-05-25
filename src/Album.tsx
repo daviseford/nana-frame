@@ -15,9 +15,11 @@ const Album: React.FC<{ photos?: IAlbum["photos"] }> = ({ photos }) => {
 
   // When we get a new photo, we want to display it immediately.
   useEffect(() => {
-    setUrls(undefined)
-    setTimeout(() => setUrls(photos), 100)
-  }, [photos]);
+    if (photos?.length !== urls?.length) {
+      setUrls(undefined);
+      setTimeout(() => setUrls(photos), 100);
+    }
+  }, [photos, urls]);
 
   if (!urls?.length) return <></>;
 

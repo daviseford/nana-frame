@@ -44,3 +44,17 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## Pi scripts
+
+Run `rpi_setup.sh` on your new Pi.
+
+Then use `kiosk.sh` to test.
+
+`0 * * * * cd ~/Desktop/nana-frame/ && git pull`
+`@reboot sh /home/pi/Desktop/nana-frame/kiosk.sh &`
+
+#### Autostart on reboot
+
+`cd /home/pi/Desktop/nana-frame/ && git pull && sh kiosk.sh`
