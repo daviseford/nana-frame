@@ -10,6 +10,7 @@ import listOfBgColors from "./style/bgColors";
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
+
 const Album: React.FC<{ album?: IAlbum }> = ({ album }) => {
   if (!album?.photos.length) return <></>;
 
