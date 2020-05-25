@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { sample } from "lodash";
 
 import AwesomeSlider from "react-awesome-slider";
@@ -10,19 +10,26 @@ import listOfBgColors from "./style/bgColors";
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
+const Album: React.FC<{ photos?: IAlbum["photos"] }> = ({ photos }) => {
+  const [urls, setUrls] = useState([] as string[] | undefined);
 
-const Album: React.FC<{ album?: IAlbum }> = ({ album }) => {
-  if (!album?.photos.length) return <></>;
+  // When we get a new photo, we want to display it immediately.
+  useEffect(() => {
+    setUrls(undefined)
+    setTimeout(() => setUrls(photos), 100)
+  }, [photos]);
+
+  if (!urls?.length) return <></>;
 
   return (
     <AutoplaySlider
       play={true}
       cancelOnInteraction={false}
-      interval={3000}
+      interval={5000}
       fillParent={true}
       buttons={false}
     >
-      {album.photos.map((url) => (
+      {urls.map((url) => (
         <div
           data-src={url}
           style={{ backgroundColor: sample(listOfBgColors) }}

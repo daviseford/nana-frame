@@ -43,8 +43,8 @@ function App() {
   console.log(album);
 
   return (
-    <div className={""}>
-      <Album album={album} />
+    <div >
+      <Album photos={album?.photos || []} />
 
       {(!album || !album.photos.length) && <Error />}
     </div>
