@@ -1,5 +1,6 @@
 import AWS from "aws-sdk";
 import { PromiseResult } from "aws-sdk/lib/request";
+import { sortBy } from "lodash";
 
 const Bucket = "nana-media";
 const Region = "us-east-1";
@@ -56,24 +57,25 @@ export const getSlideshowFiles = async (): Promise<IAlbum | void> => {
   const imgPath = "uploads/";
   const href = "https://nana-media.s3.amazonaws.com/";
   try {
-    const data = await s3.listObjectsV2({ Prefix: imgPath, Bucket }).promise();
-
+    const data = await s3
+      .listObjectsV2({ Prefix: imgPath, Bucket, MaxKeys: 1000 })
+      .promise();
     const truncatedEntries = await getTruncated(data);
 
     if (!data.Contents) throw new Error();
 
     const contents = [data.Contents, ...truncatedEntries].flat();
 
-    const photos = contents
-      .map((photo) => {
-        if (!photo) return "";
-        const photoKey = photo.Key as string;
-        return href + photoKey;
-      })
-      .filter((x) => x !== "" && x !== href + imgPath);
+    const photos = sortBy(
+      contents
+        .map((photo) => (photo ? href + photo.Key : ""))
+        .filter((x) => x !== "" && x !== href + imgPath)
+    ).reverse();
 
     return { photos };
   } catch (err) {
-    return alert("There was an error viewing your album: " + err.message);
+    return console.error(
+      "There was an error viewing your album: " + err.message
+    );
   }
 };

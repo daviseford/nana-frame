@@ -25,6 +25,7 @@ const Album: React.FC<{ album?: IAlbum }> = ({ album }) => {
         <div
           data-src={url}
           style={{ backgroundColor: sample(listOfBgColors) }}
+          key={url}
         />
       ))}
     </AutoplaySlider>
