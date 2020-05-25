@@ -13,5 +13,5 @@ sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/' /home/pi/.config/chromium
 
 DISPLAY=:0 chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8080/build/ &
 
+python3 -m http.server 8080 &
 sudo /usr/bin/chromium-browser &
-python3 -m http.server 8080
