@@ -1,8 +1,9 @@
 #!/bin/bash
 
-xset s noblank
-xset s off
-xset -dpms
+# Not working
+# xset s noblank
+# xset s off
+# xset -dpms
 
 unclutter -idle 0.5 -root &
 
