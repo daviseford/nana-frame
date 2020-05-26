@@ -1,0 +1,9 @@
+@lxpanel --profile LXDE
+@pacmanfm --desktop --profile LXDE
+@xscreensaver -no-splash
+
+@xset s off
+@xset -dpms
+@xset s noblank
+
+@sh /home/pi/nana-frame/kiosk.sh

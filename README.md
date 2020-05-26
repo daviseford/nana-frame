@@ -46,4 +46,4 @@ ALT + FN + F4
 
 
 
-sudo nano /etc/xdg/lxsession/LXDE/autostart
+cp scripts/autostart.txt ~/.config/lxsession/LXDE-pi/autostart
