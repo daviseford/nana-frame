@@ -3,6 +3,7 @@
 # https://pimylifeup.com/raspberry-pi-kiosk/
 
 export EDITOR=vim.tiny
+BASEDIR=$(dirname $0)
 
 # Remove unused
 sudo apt-get purge wolfram-engine scratch scratch2 nuscratch sonic-pi idle3 -y
@@ -28,4 +29,4 @@ crontab -r
 (crontab -l ; echo "@hourly cd /home/pi/nana-frame/ && git pull")| crontab -
 
 # Auto-start script
-cp -f scripts/autostart.txt ~/.config/lxsession/LXDE-pi/autostart
+cp -f ${BASEDIR}/autostart.txt ~/.config/lxsession/LXDE-pi/autostart
