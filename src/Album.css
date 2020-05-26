@@ -27,7 +27,7 @@
   --control-button-background: transparent;
   --transition-bezier: cubic-bezier(0.5, 0.075, 0.25, 0.95);
   /* --slider-transition-duration: 575ms; */
-  --slider-transition-duration: 1000ms;
+  --slider-transition-duration: 2000ms;
   --organic-arrow-color: #6a6a6a;
   --organic-arrow-border-radius: 0;
   --control-bullet-color: #6a6a6a;

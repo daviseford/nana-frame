@@ -25,11 +25,20 @@ Run `rpi_setup.sh` on your new Pi. This will set up dependencies, crontabs, and 
 
 Then use `kiosk.sh` to test.
 
-
 ### To get to wireless settings:
 
 ALT + TAB, go to the ugly terminal, scroll to Network Options
 
+#### Alternative
+
+Close the fullscreen slideshow by hitting ALT + FN + F4.
+
+Click the WiFi icon top right in the toolbar. If you can login there, go for it.
+
+Otherwise, click the Web Browser button on the left side of the toolbar and follow instructions to log in
+
 ### To quit full-screen slideshow:
 
 ALT + FN + F4
+
+### 
