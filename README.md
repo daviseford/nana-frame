@@ -25,7 +25,11 @@ Run `rpi_setup.sh` on your new Pi.
 
 Then use `kiosk.sh` to test.
 
-`0 * * * * cd ~/Desktop/nana-frame/ && git pull`
+(crontab -l ; echo "* * * * * cd /home/pi/nana-frame/ && git pull")| crontab -
+(crontab -l ; echo "@hourly cd /home/pi/nana-frame/ && git pull")| crontab -
+
+
+`0 * * * * cd /home/pi/nana-frame/ && git pull`
 `@reboot sh /home/pi/Desktop/nana-frame/kiosk.sh &`
 
 #### Autostart on reboot
