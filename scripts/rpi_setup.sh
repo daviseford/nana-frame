@@ -18,7 +18,6 @@ sudo apt-get upgrade
 # Deps
 sudo apt-get install xscreensaver xdotool unclutter sed chromium-browser --yes
 
-
 # Remove any existing crontab
 crontab -r
 
@@ -27,7 +26,6 @@ crontab -r
 
 # Auto-start script
 cp -f ${BASEDIR}/autostart.txt ~/.config/lxsession/LXDE-pi/autostart
-
 
 # Now within the tool go to 3 Boot Options -> B1 Desktop / CLI -> B4 Desktop Autologin
 echo "Don't forget to set Boot Options to Desktop Autologin with sudo raspi-config"
