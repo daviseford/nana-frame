@@ -1,6 +1,8 @@
 import AWS from "aws-sdk";
 import { PromiseResult } from "aws-sdk/lib/request";
 import { sortBy } from "lodash";
+import { GetObjectOutput } from "aws-sdk/clients/s3";
+import { ICaption } from "../context/useCaptions";
 
 const Bucket = "nana-media";
 const Region = "us-east-1";
@@ -15,7 +17,6 @@ const s3 = new AWS.S3({
   apiVersion: "2006-03-01",
   params: { Bucket },
 });
-
 
 type TData = PromiseResult<AWS.S3.ListObjectsV2Output, AWS.AWSError>;
 
@@ -50,7 +51,9 @@ const getTruncated = async (data: TData): Promise<TData["Contents"][]> => {
 };
 
 // Returns a list of URLs
-export const getFiles = async (s3Path: 'uploads/' | 'json/'): Promise<string[] | void> => {
+export const getFiles = async (
+  s3Path: "uploads/" | "json/"
+): Promise<string[] | void> => {
   const href = "https://nana-media.s3.amazonaws.com/";
 
   try {
@@ -71,9 +74,21 @@ export const getFiles = async (s3Path: 'uploads/' | 'json/'): Promise<string[] |
 
     return entries;
   } catch (err) {
-    console.error(
+    console.error("There was an error viewing your bucket: " + err.message);
+    return [];
+  }
+};
+
+export const getCaptionJson = async (key: string): Promise<ICaption | void> => {
+  const prefix = "json/";
+
+  try {
+    const data = await s3.getObject({ Key: prefix + key, Bucket }).promise();
+    // @ts-ignore
+    return { ...(JSON.parse(data.Body) as ICaption), key };
+  } catch (err) {
+    return console.error(
       "There was an error viewing your bucket: " + err.message
     );
-    return []
   }
 };

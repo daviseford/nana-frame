@@ -41,7 +41,7 @@ function App() {
     fn();
   }, getMins(0.1));
 
-  console.log(urls);
+  // console.log(urls);
 
   return (
     <div >
