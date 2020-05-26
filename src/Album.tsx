@@ -5,12 +5,11 @@ import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 
 import "./Album.css";
-import { IAlbum } from "./creds/aws";
 import listOfBgColors from "./style/bgColors";
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
-const Album: React.FC<{ photos?: IAlbum["photos"] }> = ({ photos }) => {
+const Album: React.FC<{ photos?: string[] }> = ({ photos }) => {
   const [urls, setUrls] = useState([] as string[] | undefined);
 
   // When we get a new photo, we want to display it immediately.

@@ -1,7 +1,7 @@
 import "core-js/stable"; // polyfills
 import React, { useState, useEffect } from "react";
 
-import { getSlideshowFiles, IAlbum } from "./creds/aws";
+import {  getFiles } from "./creds/aws";
 import useInterval from "./hooks/useInterval";
 import Album from "./Album";
 import './index.css'
@@ -21,13 +21,13 @@ const Error = () => {
 };
 
 function App() {
-  const [album, setAlbum] = useState<IAlbum | undefined>(undefined);
+  const [urls, setUrls] = useState<string[] | undefined>(undefined);
 
   // Fetch pictures on first load
   useEffect(() => {
     const fn = async () => {
-      const data = await getSlideshowFiles();
-      if (data) setAlbum(data);
+      const data = await getFiles('uploads/');
+      if (data) setUrls(data);
     };
     fn();
     // Only run once
@@ -35,19 +35,19 @@ function App() {
 
   useInterval(() => {
     const fn = async () => {
-      const data = await getSlideshowFiles();
-      if (data) setAlbum(data);
+      const data = await getFiles('uploads/');
+      if (data) setUrls(data);
     };
     fn();
   }, getMins(0.1));
 
-  console.log(album);
+  console.log(urls);
 
   return (
     <div >
-      <Album photos={album?.photos || []} />
+      <Album photos={urls || []} />
 
-      {(!album || !album.photos.length) && <Error />}
+      {(!urls || !urls.length) && <Error />}
     </div>
   );
 }

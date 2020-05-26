@@ -16,9 +16,6 @@ const s3 = new AWS.S3({
   params: { Bucket },
 });
 
-export interface IAlbum {
-  photos: string[]; // urls
-}
 
 type TData = PromiseResult<AWS.S3.ListObjectsV2Output, AWS.AWSError>;
 
@@ -52,13 +49,13 @@ const getTruncated = async (data: TData): Promise<TData["Contents"][]> => {
   }
 };
 
-// Show the photos that exist in an album.
-export const getSlideshowFiles = async (): Promise<IAlbum | void> => {
-  const imgPath = "uploads/";
+// Returns a list of URLs
+export const getFiles = async (s3Path: 'uploads/' | 'json/'): Promise<string[] | void> => {
   const href = "https://nana-media.s3.amazonaws.com/";
+
   try {
     const data = await s3
-      .listObjectsV2({ Prefix: imgPath, Bucket, MaxKeys: 1000 })
+      .listObjectsV2({ Prefix: s3Path, Bucket, MaxKeys: 1000 })
       .promise();
     const truncatedEntries = await getTruncated(data);
 
@@ -66,16 +63,17 @@ export const getSlideshowFiles = async (): Promise<IAlbum | void> => {
 
     const contents = [data.Contents, ...truncatedEntries].flat();
 
-    const photos = sortBy(
+    const entries = sortBy(
       contents
-        .map((photo) => (photo ? href + photo.Key : ""))
-        .filter((x) => x !== "" && x !== href + imgPath)
+        .map((x) => (x ? href + x.Key : ""))
+        .filter((x) => x !== "" && x !== href + s3Path)
     ).reverse();
 
-    return { photos };
+    return entries;
   } catch (err) {
-    return console.error(
-      "There was an error viewing your album: " + err.message
+    console.error(
+      "There was an error viewing your bucket: " + err.message
     );
+    return []
   }
 };
