@@ -1,12 +1,11 @@
 import "core-js/stable"; // polyfills
 import React, { useState, useEffect } from "react";
 
-import {  getFiles } from "./creds/aws";
+import { getFiles } from "./creds/aws";
 import useInterval from "./hooks/useInterval";
 import Album from "./Album";
-import './index.css'
+import "./index.css";
 
-// const getSecs = (desired_secs: number) => desired_secs * 1000
 const getMins = (desired_mins: number) => desired_mins * 1000 * 60;
 
 const Error = () => {
@@ -22,31 +21,33 @@ const Error = () => {
 
 function App() {
   const [urls, setUrls] = useState<string[] | undefined>(undefined);
+  const updateInterval = getMins(1);
 
-  // Fetch pictures on first load
+  // Fetch pictures on first load (only run once)
   useEffect(() => {
     const fn = async () => {
-      const data = await getFiles('uploads/');
+      const data = await getFiles("uploads/");
       if (data) setUrls(data);
     };
     fn();
-    // Only run once
+    // eslint-disable-next-line
   }, []);
 
+  // Check for new pictures regularly
   useInterval(() => {
     const fn = async () => {
-      const data = await getFiles('uploads/');
+      const data = await getFiles("uploads/");
       if (data) setUrls(data);
+      console.log(
+        `Just checked for updates. Next update in ${updateInterval} minutes.`
+      );
     };
     fn();
-  }, getMins(0.1));
-
-  // console.log(urls);
+  }, updateInterval);
 
   return (
-    <div >
-      <Album photos={urls || []} />
-
+    <div>
+      <Album photos={urls} />
       {(!urls || !urls.length) && <Error />}
     </div>
   );

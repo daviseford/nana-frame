@@ -1,8 +1,6 @@
 import AWS from "aws-sdk";
 import { PromiseResult } from "aws-sdk/lib/request";
 import { sortBy } from "lodash";
-import { GetObjectOutput } from "aws-sdk/clients/s3";
-import { ICaption } from "../context/useCaptions";
 
 const Bucket = "nana-media";
 const Region = "us-east-1";
@@ -76,19 +74,5 @@ export const getFiles = async (
   } catch (err) {
     console.error("There was an error viewing your bucket: " + err.message);
     return [];
-  }
-};
-
-export const getCaptionJson = async (key: string): Promise<ICaption | void> => {
-  const prefix = "json/";
-
-  try {
-    const data = await s3.getObject({ Key: prefix + key, Bucket }).promise();
-    // @ts-ignore
-    return { ...(JSON.parse(data.Body) as ICaption), key };
-  } catch (err) {
-    return console.error(
-      "There was an error viewing your bucket: " + err.message
-    );
   }
 };

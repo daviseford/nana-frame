@@ -12,9 +12,6 @@ const AutoplaySlider = withAutoplay(AwesomeSlider);
 const Album: React.FC<{ photos?: string[] }> = ({ photos }) => {
   const [urls, setUrls] = useState([] as string[] | undefined);
 
-  // const { urls: jsonUrls } = useCaptions();
-  // console.log(jsonUrls)
-
   // When we get a new photo, we want to display it immediately.
   useEffect(() => {
     if (photos?.length !== urls?.length) {

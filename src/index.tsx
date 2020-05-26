@@ -3,13 +3,10 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { CaptionProvider } from "./context/useCaptions";
 
 ReactDOM.render(
   <React.StrictMode>
-    <CaptionProvider>
-      <App />
-    </CaptionProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
