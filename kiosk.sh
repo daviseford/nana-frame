@@ -16,6 +16,6 @@ python3 -m http.server 8080 --directory=${BASEDIR} &
 
 sleep 3
 
-/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8080/build/ &
+/usr/bin/chromium-browser --use-gl=egl --noerrdialogs --disable-infobars --kiosk http://localhost:8080/build/ &
 
 lxterminal -e sudo raspi-config
