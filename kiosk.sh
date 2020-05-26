@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export DISPLAY=:0
+BASEDIR=$(dirname $0)
 
 xset s noblank
 xset s off
@@ -12,7 +13,7 @@ sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' /home/pi/.config/chromi
 sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/' /home/pi/.config/chromium/Default/Preferences
 
 
-python3 -m http.server 8080 --directory=$(pwd) &
+python3 -m http.server 8080 --directory=${BASEDIR} &
 
 sleep 5
 
