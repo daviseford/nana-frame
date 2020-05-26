@@ -40,5 +40,3 @@ Otherwise, click the Web Browser button on the left side of the toolbar and foll
 ### To quit full-screen slideshow:
 
 ALT + FN + F4
-
-### 

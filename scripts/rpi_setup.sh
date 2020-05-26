@@ -27,6 +27,8 @@ crontab -r
 # Auto-start script
 cp -f ${BASEDIR}/autostart.txt ~/.config/lxsession/LXDE-pi/autostart
 
+xscreensaver-demo
+
 # Now within the tool go to 3 Boot Options -> B1 Desktop / CLI -> B4 Desktop Autologin
 echo "Don't forget to set Boot Options to Desktop Autologin with sudo raspi-config"
 echo "also, fix renderer"
