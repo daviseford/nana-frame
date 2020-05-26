@@ -21,29 +21,15 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Pi scripts
 
-Run `rpi_setup.sh` on your new Pi.
+Run `rpi_setup.sh` on your new Pi. This will set up dependencies, crontabs, and auto start scripts.
 
 Then use `kiosk.sh` to test.
 
-(crontab -l ; echo "* * * * * cd /home/pi/nana-frame/ && git pull")| crontab -
-(crontab -l ; echo "@hourly cd /home/pi/nana-frame/ && git pull")| crontab -
 
+### To get to wireless settings:
 
-`0 * * * * cd /home/pi/nana-frame/ && git pull`
-`@reboot sh /home/pi/Desktop/nana-frame/kiosk.sh &`
+ALT + TAB, go to the ugly terminal, scroll to Network Options
 
-#### Autostart on reboot
-
-`cd /home/pi/Desktop/nana-frame/ && git pull && sh kiosk.sh`
-
-To get to wireless settings:
-
-Windows Key -> Preferences
-
-To quit full-screen slideshow:
+### To quit full-screen slideshow:
 
 ALT + FN + F4
-
-
-
-cp scripts/autostart.txt ~/.config/lxsession/LXDE-pi/autostart
