@@ -1,5 +1,5 @@
-@lxpanel --profile LXDE
-@pacmanfm --desktop --profile LXDE
+@lxpanel --profile LXDE-pi
+@pacmanfm --desktop --profile LXDE-pi
 @xscreensaver -no-splash
 
 @xset s off
