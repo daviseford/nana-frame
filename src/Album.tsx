@@ -6,16 +6,14 @@ import withAutoplay from "react-awesome-slider/dist/autoplay";
 
 import "./Album.css";
 import listOfBgColors from "./style/bgColors";
-import { useCaptions } from "./context/useCaptions";
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const Album: React.FC<{ photos?: string[] }> = ({ photos }) => {
   const [urls, setUrls] = useState([] as string[] | undefined);
 
-  const { urls: jsonUrls } = useCaptions();
-
-  console.log(jsonUrls)
+  // const { urls: jsonUrls } = useCaptions();
+  // console.log(jsonUrls)
 
   // When we get a new photo, we want to display it immediately.
   useEffect(() => {
