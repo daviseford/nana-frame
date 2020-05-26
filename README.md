@@ -43,3 +43,7 @@ Windows Key -> Preferences
 To quit full-screen slideshow:
 
 ALT + FN + F4
+
+
+
+sudo nano /etc/xdg/lxsession/LXDE/autostart
