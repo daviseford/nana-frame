@@ -19,9 +19,11 @@ const Error = () => {
   );
 };
 
+const MINS_BETWEEN_UPDATE = 1;
+
 function App() {
   const [urls, setUrls] = useState<string[] | undefined>(undefined);
-  const updateInterval = getMins(1);
+  const updateInterval = getMins(MINS_BETWEEN_UPDATE);
 
   // Fetch pictures on first load (only run once)
   useEffect(() => {
@@ -39,7 +41,9 @@ function App() {
       const data = await getFiles("uploads/");
       if (data) setUrls(data);
       console.log(
-        `Just checked for updates. Next update in ${updateInterval} minutes.`
+        `Just checked for updates. Next update in ${MINS_BETWEEN_UPDATE} minute${
+          MINS_BETWEEN_UPDATE === 1 ? "" : "s"
+        }.`
       );
     };
     fn();

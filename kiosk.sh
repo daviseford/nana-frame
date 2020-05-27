@@ -14,7 +14,7 @@ sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/' /home/pi/.config/chromium
 
 python3 -m http.server 8080 --directory=${BASEDIR} &
 
-sleep 3
+sleep 2
 
 /usr/bin/chromium-browser --use-gl=egl --noerrdialogs --disable-infobars --kiosk http://localhost:8080/build/ &
 

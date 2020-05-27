@@ -22,7 +22,7 @@ sudo apt-get install xscreensaver xdotool unclutter sed chromium-browser --yes
 crontab -r
 
 # Write crontab
-(crontab -l ; echo "@hourly cd /home/pi/nana-frame/ && git pull")| crontab -
+(crontab -l ; echo "@daily cd /home/pi/nana-frame/ && git pull")| crontab -
 
 # Auto-start script
 cp -f ${BASEDIR}/autostart.txt ~/.config/lxsession/LXDE-pi/autostart
