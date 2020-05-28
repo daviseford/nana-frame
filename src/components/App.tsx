@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-import { getFiles } from "./creds/aws";
-import useInterval from "./hooks/useInterval";
+import { getUrlsFromBucket } from "../util/aws";
+import useInterval from "../hooks/useInterval";
 import Album from "./Album";
 
 const getMins = (desired_mins: number) => desired_mins * 1000 * 60;
 
-const Error = () => {
+const NoUrlsFound = () => {
   return (
     <div className={"def-error"}>
       No pictures found yet.
@@ -26,7 +26,7 @@ function App() {
   // Fetch pictures on first load (only run once)
   useEffect(() => {
     const fn = async () => {
-      const data = await getFiles("uploads/");
+      const data = await getUrlsFromBucket();
       if (data) setUrls(data);
     };
     fn();
@@ -36,7 +36,7 @@ function App() {
   // Check for new pictures regularly
   useInterval(() => {
     const fn = async () => {
-      const data = await getFiles("uploads/");
+      const data = await getUrlsFromBucket();
       if (data) setUrls(data);
       console.log(
         `Just checked for updates. Next update in ${MINS_BETWEEN_UPDATE} minute${
@@ -50,7 +50,7 @@ function App() {
   return (
     <div>
       <Album photos={urls} />
-      {(!urls || !urls.length) && <Error />}
+      {(!urls || !urls.length) && <NoUrlsFound />}
     </div>
   );
 }

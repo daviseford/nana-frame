@@ -3,10 +3,12 @@
 export DISPLAY=:0
 BASEDIR=$(dirname $0)
 
+# Disable screensaver
 xset s noblank
 xset s off
 xset -dpms
 
+# Disable mouse cursor when idle
 unclutter -idle 0.5 -root &
 
 sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' /home/pi/.config/chromium/Default/Preferences

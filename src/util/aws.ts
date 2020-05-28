@@ -1,14 +1,18 @@
 import AWS from "aws-sdk";
-import { PromiseResult } from "aws-sdk/lib/request";
 import { sortBy } from "lodash";
+import type { PromiseResult } from "aws-sdk/lib/request";
+import ENV from "./env";
 
-const Bucket = "nana-media";
-const Region = "us-east-1";
-// Initialize the Amazon Cognito credentials provider
-AWS.config.region = Region;
-AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-  IdentityPoolId: "us-east-1:3a445c96-1f34-4459-b18c-91f99b16cbf4",
-});
+const Bucket = ENV.BUCKET;
+
+AWS.config.region = ENV.REGION;
+
+// Initialize the Amazon Cognito credentials provider (optional)
+if (ENV.COGNITO_IDENTITY) {
+  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: ENV.COGNITO_IDENTITY,
+  });
+}
 
 // Create a new service object
 const s3 = new AWS.S3({
@@ -31,7 +35,12 @@ const getTruncated = async (data: TData): Promise<TData["Contents"][]> => {
     IsTruncated,
   } = data;
 
-  if (!IsTruncated || !ContinuationToken) return truncatedMapper(truncatedData);
+  // If we're done fetching, return the data
+  if (!IsTruncated || !ContinuationToken) {
+    const mappedData = truncatedMapper(truncatedData)
+    truncatedData = [] // Clear our array
+    return mappedData
+  };
 
   try {
     const newData = await s3
@@ -48,26 +57,25 @@ const getTruncated = async (data: TData): Promise<TData["Contents"][]> => {
   }
 };
 
-// Returns a list of URLs
-export const getFiles = async (
-  s3Path: "uploads/" | "json/"
-): Promise<string[] | void> => {
-  const href = "https://nana-media.s3.amazonaws.com/";
-
+// Returns a list of URLs from our bucket
+export const getUrlsFromBucket = async (): Promise<string[] | void> => {
   try {
+    const Prefix = ENV.BUCKET_PREFIX
+
     const data = await s3
-      .listObjectsV2({ Prefix: s3Path, Bucket, MaxKeys: 1000 })
+      .listObjectsV2({ Prefix, Bucket, MaxKeys: 1000 })
       .promise();
     const truncatedEntries = await getTruncated(data);
 
-    if (!data.Contents) throw new Error();
+    if (!data.Contents) throw new Error('Missing data.Contents!');
 
     const contents = [data.Contents, ...truncatedEntries].flat();
 
+    // Sort newest -> oldest
     const entries = sortBy(
       contents
-        .map((x) => (x ? href + x.Key : ""))
-        .filter((x) => x !== "" && x !== href + s3Path)
+        .map((x) => (x ? ENV.BUCKET_HREF + x.Key : ""))
+        .filter((x) => x !== "" && x !== ENV.BUCKET_HREF + Prefix)
     ).reverse();
 
     return entries;

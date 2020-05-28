@@ -1,6 +1,10 @@
-# nana-frame
+# Digital Slideshow for AWS Images
 
-A digital picture frame for Nana
+A digital picture slideshow powered by React.
+
+## Environmental Variables
+
+Edit `.env` file with the variables needed to access your AWS bucket.
 
 ## Available Scripts
 
@@ -11,21 +15,17 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### `yarn build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the app for production to the `build` folder.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Pi Settings/Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Scripts
 
-## Pi scripts
-
-Run `rpi_setup.sh` on your new Pi. This will set up dependencies, crontabs, and auto start scripts.
+Run `rpi_setup.sh` on your new Pi. This will set up dependencies, `crontab`, and `autostart` scripts.
 
 Then use `kiosk.sh` to test.
 
-### To get to wireless settings:
+### To get to wireless settings on the Pi:
 
 ALT + TAB, go to the ugly terminal, scroll to Network Options
 
@@ -33,9 +33,7 @@ ALT + TAB, go to the ugly terminal, scroll to Network Options
 
 Close the fullscreen slideshow by hitting ALT + FN + F4.
 
-Click the WiFi icon top right in the toolbar. If you can login there, go for it.
-
-Otherwise, click the Web Browser button on the left side of the toolbar and follow instructions to log in
+Click the WiFi icon top right in the toolbar.
 
 ### To quit full-screen slideshow:
 

@@ -5,7 +5,7 @@ import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 
 import "./Album.css";
-import listOfBgColors from "./style/bgColors";
+import listOfBgColors from "../../style/bgColors";
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
