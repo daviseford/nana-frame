@@ -1,10 +1,8 @@
-import "core-js/stable"; // polyfills
 import React, { useState, useEffect } from "react";
 
 import { getFiles } from "./creds/aws";
 import useInterval from "./hooks/useInterval";
 import Album from "./Album";
-import "./index.css";
 
 const getMins = (desired_mins: number) => desired_mins * 1000 * 60;
 
