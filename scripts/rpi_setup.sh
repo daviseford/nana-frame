@@ -5,7 +5,7 @@
 export EDITOR=vim.tiny
 BASEDIR=$(dirname $0)
 
-# Remove unused
+# Remove unused packages
 sudo apt-get purge wolfram-engine scratch scratch2 nuscratch sonic-pi idle3 -y
 sudo apt-get purge smartsim java-common minecraft-pi libreoffice* -y
 
@@ -27,9 +27,10 @@ crontab -r
 # Auto-start script
 cp -f ${BASEDIR}/autostart.txt ~/.config/lxsession/LXDE-pi/autostart
 
-xscreensaver-demo
+# Disable screensaver
+echo "Disable screensaver with xscreensaver"
+lxterminal -e xscreensaver-demo
 
-# Now within the tool go to 3 Boot Options -> B1 Desktop / CLI -> B4 Desktop Autologin
-echo "Don't forget to set Boot Options to Desktop Autologin with sudo raspi-config"
-echo "also, fix renderer"
-echo "sudo raspi-config -> Advanced Options -> Compositor -> then choose no to xcompmgr composition manager"
+echo "sudo raspi-config -> Boot Options -> Desktop Autologin"
+echo "sudo raspi-config -> Advanced Options -> Compositor -> xcompmgr composition manager -> Choose 'No'"
+lxterminal -e sudo raspi-config
