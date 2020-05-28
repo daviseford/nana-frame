@@ -4,6 +4,7 @@ import type { PromiseResult } from "aws-sdk/lib/request";
 import ENV from "./env";
 
 const Bucket = ENV.BUCKET;
+const MaxKeys = 1000
 
 AWS.config.region = ENV.REGION;
 
@@ -44,10 +45,15 @@ const getTruncated = async (data: TData): Promise<TData["Contents"][]> => {
 
   try {
     const newData = await s3
-      .listObjectsV2({ Prefix, Bucket, ContinuationToken })
+      .listObjectsV2({ Prefix, Bucket, ContinuationToken, MaxKeys })
       .promise();
 
-    if (!newData || !newData.Contents) return truncatedMapper(truncatedData);
+      // If we didn't get anything, return the existing data
+    if (!newData || !newData.Contents) {
+      const mappedData = truncatedMapper(truncatedData)
+      truncatedData = [] // Clear our array
+      return mappedData
+    };
 
     truncatedData.push(newData);
     return getTruncated(newData);
@@ -63,7 +69,7 @@ export const getUrlsFromBucket = async (): Promise<string[] | void> => {
     const Prefix = ENV.BUCKET_PREFIX
 
     const data = await s3
-      .listObjectsV2({ Prefix, Bucket, MaxKeys: 1000 })
+      .listObjectsV2({ Prefix, Bucket, MaxKeys })
       .promise();
     const truncatedEntries = await getTruncated(data);
 
@@ -74,10 +80,10 @@ export const getUrlsFromBucket = async (): Promise<string[] | void> => {
     // Sort newest -> oldest
     const entries = sortBy(
       contents
-        .map((x) => (x ? ENV.BUCKET_HREF + x.Key : ""))
-        .filter((x) => x !== "" && x !== ENV.BUCKET_HREF + Prefix)
+        .map((x) => (x ? `${ENV.BUCKET_HREF}${x.Key}` : ""))
+        .filter((x) => x !== "" && x !== `${ENV.BUCKET_HREF}${Prefix}`)
     ).reverse();
-
+    
     return entries;
   } catch (err) {
     console.error("There was an error viewing your bucket: " + err.message);
