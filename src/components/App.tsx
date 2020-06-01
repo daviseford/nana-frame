@@ -1,25 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { getUrlsFromBucket } from "../util/aws";
 import useInterval from "../hooks/useInterval";
 import Album from "./Album";
+import Admin from "./Admin";
 
 const getMins = (desired_mins: number) => desired_mins * 1000 * 60;
 
-const NoUrlsFound = () => {
-  return (
-    <div className={"def-error"}>
-      No pictures found yet.
-      <br />
-      <br />
-      We love you Nana!
-    </div>
-  );
-};
-
 const MINS_BETWEEN_UPDATE = 1;
 
-function App() {
+const App = () => {
   const [urls, setUrls] = useState<string[] | undefined>(undefined);
   const updateInterval = getMins(MINS_BETWEEN_UPDATE);
 
@@ -48,11 +39,17 @@ function App() {
   }, updateInterval);
 
   return (
-    <div>
-      <Album photos={urls} />
-      {(!urls || !urls.length) && <NoUrlsFound />}
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/admin">
+          <Admin urls={urls} />
+        </Route>
+        <Route path="/">
+          <Album photos={urls} />
+        </Route>
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;

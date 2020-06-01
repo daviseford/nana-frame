@@ -9,6 +9,19 @@ import listOfBgColors from "../../style/bgColors";
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
+const NoUrlsFound = () => {
+  return (
+    <div>
+      <div className={"def-error"}>
+        No pictures found yet.
+        <br />
+        <br />
+        We love you Nana!
+      </div>
+    </div>
+  );
+};
+
 const Album: React.FC<{ photos?: string[] }> = ({ photos }) => {
   const [urls, setUrls] = useState([] as string[] | undefined);
 
@@ -20,24 +33,26 @@ const Album: React.FC<{ photos?: string[] }> = ({ photos }) => {
     }
   }, [photos, urls]);
 
-  if (!urls?.length) return <></>;
+  if (!urls?.length) return <NoUrlsFound />;
 
   return (
-    <AutoplaySlider
-      play={true}
-      cancelOnInteraction={false}
-      interval={5000}
-      fillParent={true}
-      buttons={false}
-    >
-      {urls.map((url) => (
-        <div
-          data-src={url}
-          style={{ backgroundColor: sample(listOfBgColors) }}
-          key={url}
-        />
-      ))}
-    </AutoplaySlider>
+    <div>
+      <AutoplaySlider
+        play={true}
+        cancelOnInteraction={false}
+        interval={5000}
+        fillParent={true}
+        buttons={false}
+      >
+        {urls.map((url) => (
+          <div
+            data-src={url}
+            style={{ backgroundColor: sample(listOfBgColors) }}
+            key={url}
+          />
+        ))}
+      </AutoplaySlider>
+    </div>
   );
 };
 
