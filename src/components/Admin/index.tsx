@@ -4,11 +4,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import delImage from "../../util/delete";
 import ENV from "../../util/env";
 
-const Admin: React.FC<{ urls?: string[] }> = ({ urls }) => {
+const Admin: React.FC<{ urls?: string[] }> = ({ urls = [] }) => {
   const [idx, setIdx] = useState(0);
-  const chunks = useMemo(() => chunk(urls || [], 20), [urls]);
+  const chunks = useMemo(() => chunk(urls, 20), [urls]);
 
-  if (chunks.length === 0) return <div>No pics found.</div>
+  if (chunks.length === 0) return <div>No images found.</div>
 
   // Need to show scrollbars
   document.body.style.overflow = "auto";
@@ -19,28 +19,19 @@ const Admin: React.FC<{ urls?: string[] }> = ({ urls }) => {
         <section className="jumbotron text-center">
           <div className="container">
             <h2>Admin Panel</h2>
-            <p>
-              {chunks.map((x, i) => {
-                return (
-                  <button
-                    type="button"
-                    onClick={() => setIdx(i)}
-                    className={`btn btn-${
-                      idx === i ? "primary" : "secondary"
-                    } my-2`}
-                    key={i}
-                  >
-                    {i + 1}
-                  </button>
-                );
-              })}
-            </p>
+            <p>{urls.length} images available.</p>
+            <Pagination chunks={chunks} idx={idx} setIdx={setIdx} />
           </div>
         </section>
 
         <div className="container">
           <div className="row">
             {chunks[idx] && chunks[idx].map((u) => <Col url={u} key={u} />)}
+          </div>
+          <div className="row text-center">
+            <div className="col">
+              <Pagination chunks={chunks} idx={idx} setIdx={setIdx} />
+            </div>
           </div>
         </div>
       </div>
@@ -71,5 +62,33 @@ const Col: React.FC<{ url: string }> = ({ url }) => {
     </div>
   );
 };
+
+interface IPaginationProps {
+  chunks: string[][]
+  setIdx: (i: number) => void
+  idx: number
+}
+
+const Pagination: React.FC<IPaginationProps> = ({ chunks, setIdx, idx }) => {
+
+  return (
+    <p>
+      {chunks.map((x, i) => {
+        return (
+          <button
+            type="button"
+            onClick={() => setIdx(i)}
+            className={`btn btn-${
+              idx === i ? "primary" : "secondary"
+              } my-2 mx-1`}
+            key={i}
+          >
+            {i + 1}
+          </button>
+        );
+      })}
+    </p>
+  )
+}
 
 export default Admin;
