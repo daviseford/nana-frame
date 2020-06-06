@@ -2,13 +2,13 @@ import React, { useState, useMemo } from "react";
 import { chunk } from "lodash";
 import "bootstrap/dist/css/bootstrap.css";
 import delImage from "../../util/delete";
-import ENV from "../../util/env";
+import rotateImage from "../../util/rotate";
 
 const Admin: React.FC<{ urls?: string[] }> = ({ urls = [] }) => {
   const [idx, setIdx] = useState(0);
   const chunks = useMemo(() => chunk(urls, 20), [urls]);
 
-  if (chunks.length === 0) return <div>No images found.</div>
+  if (chunks.length === 0) return <div>No images found.</div>;
 
   // Need to show scrollbars
   document.body.style.overflow = "auto";
@@ -50,10 +50,24 @@ const Col: React.FC<{ url: string }> = ({ url }) => {
             <div className="btn-group">
               <button
                 type="button"
-                className="btn btn-sm btn-outline-danger"
-                onClick={() => delImage(url.replace(ENV.BUCKET_HREF, ""))}
+                className="btn btn-sm btn-outline-primary mx-1"
+                onClick={() => rotateImage(url, 180)}
+              >
+                Rotate Left
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-danger mx-1"
+                onClick={() => delImage(url)}
               >
                 Delete
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-primary mx-1"
+                onClick={() => rotateImage(url, 0)}
+              >
+                Rotate Right
               </button>
             </div>
           </div>
@@ -64,13 +78,12 @@ const Col: React.FC<{ url: string }> = ({ url }) => {
 };
 
 interface IPaginationProps {
-  chunks: string[][]
-  setIdx: (i: number) => void
-  idx: number
+  chunks: string[][];
+  setIdx: (i: number) => void;
+  idx: number;
 }
 
 const Pagination: React.FC<IPaginationProps> = ({ chunks, setIdx, idx }) => {
-
   return (
     <p>
       {chunks.map((x, i) => {
@@ -80,7 +93,7 @@ const Pagination: React.FC<IPaginationProps> = ({ chunks, setIdx, idx }) => {
             onClick={() => setIdx(i)}
             className={`btn btn-${
               idx === i ? "primary" : "secondary"
-              } my-2 mx-1`}
+            } my-2 mx-1`}
             key={i}
           >
             {i + 1}
@@ -88,7 +101,7 @@ const Pagination: React.FC<IPaginationProps> = ({ chunks, setIdx, idx }) => {
         );
       })}
     </p>
-  )
-}
+  );
+};
 
 export default Admin;
