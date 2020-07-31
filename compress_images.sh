@@ -16,7 +16,7 @@ mogrify -resize 1920 *.jpeg
 find . -type f -iname '*.jpg' -exec jpegoptim --strip-com --max=85 {} \;
 find . -type f -iname '*.jpeg' -exec jpegoptim --strip-com --max=85 {} \;
 
-aws s3 sync --delete --size-only . s3://nanaimages/processed/ --acl public-read --exclude "*build_log.txt" --exclude "*.idea*" --exclude "*.sh" --exclude "*.git*" --exclude "*.DS_Store"
+aws s3 sync . s3://nanaimages/attachments/ --acl public-read --exclude "*build_log.txt" --exclude "*.idea*" --exclude "*.sh" --exclude "*.git*" --exclude "*.DS_Store"
 
 cd ..
 
