@@ -8,7 +8,7 @@ import Admin from "./Admin";
 
 const getMins = (desired_mins: number) => desired_mins * 1000 * 60;
 
-const MINS_BETWEEN_UPDATE = 1;
+const MINS_BETWEEN_UPDATE = 5;
 
 const App = () => {
   const [urls, setUrls] = useState<string[] | undefined>(undefined);
@@ -30,9 +30,7 @@ const App = () => {
       const data = await getUrlsFromBucket();
       if (data) setUrls(data);
       console.log(
-        `Just checked for updates. Next update in ${MINS_BETWEEN_UPDATE} minute${
-          MINS_BETWEEN_UPDATE === 1 ? "" : "s"
-        }.`
+        `Just checked for updates. Next update in ${MINS_BETWEEN_UPDATE} minutes.`
       );
     };
     fn();
