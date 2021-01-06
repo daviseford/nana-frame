@@ -5,7 +5,7 @@
   "homepage": "./",
   "dependencies": {
     "aws-sdk": "2.725.0",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "bootstrap": "4.5.0",
     "core-js": "3.6.5",
     "lodash": "4.17.19",
